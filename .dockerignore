@@ -1,0 +1,4 @@
+.git
+
+# Ignore node_modules in case they are installed locally for a different OS/architecture
+node_modules

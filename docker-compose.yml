@@ -1,0 +1,38 @@
+version: "3.5"
+
+services:
+    web:
+      image: hmazter/laravel-kubernetes-web
+      build:
+        context: .
+        dockerfile: ./docker/nginx/Dockerfile
+
+    app:
+      image: hmazter/laravel-kubernetes-app
+      build:
+        context: .
+        dockerfile: ./docker/app/Dockerfile
+      environment:
+        CONTAINER_ROLE: app
+
+    schedule:
+      image: hmazter/laravel-kubernetes-app
+      environment:
+        CONTAINER_ROLE: schedule
+
+    worker:
+      image: hmazter/laravel-kubernetes-app
+      environment:
+        CONTAINER_ROLE: worker
+
+
+    redis:
+      image: redis:alpine
+
+    db:
+      image: mysql:5.7
+      environment:
+        MYSQL_DATABASE: "laravel"
+        MYSQL_USER: "laravel"
+        MYSQL_PASSWORD: "secret"
+        MYSQL_RANDOM_ROOT_PASSWORD: "yes"
